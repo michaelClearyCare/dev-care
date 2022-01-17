@@ -20,7 +20,6 @@ export const CopyBearerTokenButton = () => {
   }
 
   useEffect(() => {
-    console.log('useEffect bearerToken...')
     sendContentMessage({ type: ContentMessageTypes.GET_BEARER_TOKEN }, setBearerToken)
   }, [bearerToken])
 
