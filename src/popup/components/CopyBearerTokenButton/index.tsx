@@ -31,7 +31,7 @@ export const CopyBearerTokenButton = () => {
       onClick={ requestBearerToken }
       title={ title }
     >
-      { text + 'hello' }
+      { text }
     </button>
   )
 }
