@@ -48,8 +48,10 @@ Some features may work behind the scenes and do not require a UI. These features
 
 ---
 ## Issues, Comments, Questions, Requests?
-Please contact @michael.cleary@care.com
+Please reach out [michael.cleary@care.com](mailto:michael.cleary@care.com?subject=CareDev%20Chrome%20Extension%20Feedback)
 
 ---
 > ## TODO
 > * Test injection script
+> * Implement, document, and test Logging
+> * Build out request interceptor. Amplitude and graphql requests can be filtered (already implemented). Need to display events and create toggle in popup to control this functionality
