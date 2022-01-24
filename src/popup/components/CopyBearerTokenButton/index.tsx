@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ContentMessageTypes, sendContentMessage } from '../../../contentScript'
+import { FlatButton } from '../../../shared/components'
 import './styles.scss'
 
 export const copyToClipboard = (text: string) => navigator.clipboard.writeText(text)
@@ -23,15 +24,21 @@ export const CopyBearerTokenButton = () => {
     sendContentMessage({ type: ContentMessageTypes.GET_BEARER_TOKEN }, setBearerToken)
   }, [bearerToken])
 
+  // hiddenText is used to get max text width so text changing does not affect button width
+  const hiddenText = useRef(null);
+  const longestText = [ initialText, successText ].sort( (a, b) => b.length - a.length)[0]
+  const width = hiddenText?.current?.clientWidth;
+
   return (
-    <button
+    <FlatButton
       className='copyBearerTokenButton'
       disabled={ !bearerToken }
       onClick={ requestBearerToken }
       title={ title }
     >
-      { text }
-    </button>
+      <div style={{ width }}>{ text }</div>
+      <div ref={ hiddenText } className='hidden'>{ longestText }</div>
+    </FlatButton>
   )
 }
 

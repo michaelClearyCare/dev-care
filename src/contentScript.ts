@@ -1,14 +1,7 @@
+import { ephemeralScript } from './utils/scriptInjection'
+import { DevtoolsMessageTypes } from './devtools/Devtools'
+
 let storedBearerToken: string
-
-const urlOf = (path: string) => chrome.runtime.getURL(path)
-
-const ephemeralScript = (path: string) => {
-  const script = document.createElement('script')
-  script.src = urlOf(path)
-  script.dataset.id = chrome.runtime.id
-  script.onload = () => document.body.removeChild(script)
-  document.body.appendChild(script)
-}
 
 document.addEventListener('load', () => ephemeralScript('/dist/js/injection.js'))
 
@@ -18,32 +11,41 @@ export interface ContentMessage {
 }
 
 export enum ContentMessageTypes {
-  STORE_BEARER_TOKEN,
-  GET_BEARER_TOKEN,
-  COPY_BEARER_TOKEN
+  STORE_BEARER_TOKEN = 'STORE_BEARER_TOKEN', // Store bearer token for use later
+  GET_BEARER_TOKEN = 'GET_BEARER_TOKEN', // Get stored bearer token
+  COPY_BEARER_TOKEN = 'COPY_BEARER_TOKEN', // Copy bearer token to clipboard
+  AMPLITUDE_LOGGING = 'AMPLITUDE_LOGGING', // Send intercepted amplitude logging event request data
 }
 
+// TODO this does not work
+// if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+//   // Update browser action icon for dark mode
+//   chrome.browserAction.setIcon({ path: '/careLogoDark.png' })
+// }
+
 export const sendContentMessage = (message: ContentMessage, callBack?: (...params: any[]) => any) => {
-  chrome.tabs.query({active: true, currentWindow: true}, tabs => {
-    chrome.tabs.sendMessage(tabs[0].id, message, callBack)
+  chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+    if (tabs[0]) chrome.tabs.sendMessage(tabs[0].id, message, callBack)
   })
 }
 
 chrome.runtime.onMessage.addListener(({ type, payload }: ContentMessage, sender, sendResponse) => {
+  if (!Object.values(ContentMessageTypes).includes(type)) return
+
   switch(type) {
-    case ContentMessageTypes.STORE_BEARER_TOKEN: {
-      const { bearerToken } = payload
-      storedBearerToken = bearerToken
+    case ContentMessageTypes.STORE_BEARER_TOKEN:
+      storedBearerToken = payload?.bearerToken || storedBearerToken
       break
-    }
-    case ContentMessageTypes.GET_BEARER_TOKEN: {
+    case ContentMessageTypes.GET_BEARER_TOKEN:
       sendResponse(storedBearerToken)
       break
-    }
-    case ContentMessageTypes.COPY_BEARER_TOKEN: {
+    case ContentMessageTypes.COPY_BEARER_TOKEN:
       sendResponse(storedBearerToken)
       break
-    }
+    case ContentMessageTypes.AMPLITUDE_LOGGING:
+      // Send logging data to devtools to display in DevCare tab
+      chrome.runtime.sendMessage({ type: DevtoolsMessageTypes.LOG_AMPLITUDE_EVENT, payload })
+      break
     default:
       console.error(`contentScript received invalid message`, { type, payload, sender })
   }

@@ -1,10 +1,9 @@
 :root {
-  --color-disbled: rgb(153, 153, 153);
-  --color-background: rgb(51, 51, 51);
-  --color-primary: rgb(17, 145, 47);
-  --color-primary-accent: rgb(17, 118, 40);
-  --color-white: rgb(230, 230, 230);
-  --color-whiter: rgb(255, 255, 255);
+  --body-width: max-content;
+  --color-disabled: #999999;
+  --color-background: #171717;
+  --color-white: #e6e6e6;
+  --color-whiter: #ffffff;
 }
 
 *, *::before, *::after {
@@ -14,18 +13,28 @@
 }
 
 body {
-  width: 180px;
-  margin-top: 10px;
-  color: var(--color-primary);
+  width: var(--body-width);
+  height: clamp(1rem, 100%, 600px);
+  color: var(--color-white);
   background-color: var(--color-background);
-  text-align: center;
-  font-family: monospace;
+  font-family: var(--font-family-primary);
+  &::-webkit-scrollbar {
+    width: 5px;
+    background-color: #111111;
+    margin-right: 5px;
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #84c8f2;
+    border-radius: 10px;
+    border: 1px solid transparent;
+  }
   ::selection {
-    background-color: var(--color-primary);
+    background-color: var(--color-disabled);
     color: var(--color-whiter);
   }
 }
 
 main {
-  padding: 20px 0;
+  // padding: 10px 10px 0 10px; // TODO add this back in when there is more content than a single button
 }

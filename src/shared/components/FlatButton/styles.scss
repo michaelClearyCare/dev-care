@@ -1,0 +1,27 @@
+.flatButton {
+  cursor: pointer;
+  margin: var(--margin-input);
+  font-family: var(--font-family-primary);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+  color: var(--color);
+  background-color: var(--color-bg);
+  transition: background-color 0.2s ease-out, color 0.2s ease-out;
+
+  &:hover, &:focus-visible {
+    background-color: var(--color-bg-hover);
+    color: var(--color-hover);
+  }
+
+  &:active {
+    background-color: var(--color-bg-active);
+    color: var(--color-active);
+  }
+
+  &:disabled {
+    background-color: var(--color-bg-disabled);
+    color: var(--color-disabled);
+    cursor: not-allowed;
+  }
+}

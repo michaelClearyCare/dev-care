@@ -48,8 +48,22 @@ Some features may work behind the scenes and do not require a UI. These features
 
 ---
 ## Issues, Comments, Questions, Requests?
-Please contact @michael.cleary@care.com
+Please reach out to [michael.cleary@care.com](mailto:michael.cleary@care.com?subject=CareDev%20Chrome%20Extension%20Feedback&body=Thank%20you%20for%20reaching%20out%20regarding%20the%20DevCare%20Chrome%20Extension.%0D%0A%0D%0A%0D%0APlease%20leave%20any%20feedback%20here.%0D%0A%20%20%0D%0A%0D%0A%0D%0AFor%20bug%20reporting,%20please%20provide%20the%20following:%0D%0A%0D%0A%20%20*%20%20Description%20of%20issue:%0D%0A%20%20%20%20%20%0D%0A%0D%0A%0D%0A%20%20*%20%20Screenshots%20(if%20applicable):%0D%0A%20%20%20%20%20%0D%0A%0D%0A%0D%0A%20%20*%20%20Steps%20to%20reproduce:%0D%0A%20%20%20%20%20%0D%0A%0D%0A%0D%0A)
 
 ---
 > ## TODO
+> * Build "copy local auth token" feature
+> * Figure out how to detect system theme and toggle action icon accordingly
+> * Figure out how to get the extension id to the devtools in order to open ports with the background/content scripts
+> * Finish implementing zip folder script and add command to package.json
 > * Test injection script
+> * Get feedback on event logging and add to it
+> * Add screenshot features
+> * Add logging features (for reproducing issues later)
+> * Implement data persistence for user settings
+> * Implement omnibox keyword -- search wiki, perform actions (login, create user, etc.), etc.
+> * Create custom text input field
+> * Create options page
+> * Create collapsable wrapper component for devtools and popup
+> * Refactor **all** color variable names, combine appropriately in higher level shared folders
+> * Build out request interceptor. Amplitude and graphql requests can be filtered (already implemented). Need to display events and create toggle in popup to control this functionality

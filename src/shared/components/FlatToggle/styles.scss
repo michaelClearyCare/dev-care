@@ -1,0 +1,91 @@
+:root {
+  --width-circle: 1.5rem;
+  --width-ellipse: calc(var(--width-circle) * 2);
+  --transition-bg-flat-toggle: background-color 0.2s 0.1s linear;
+  --transition-slider-flat-toggle: left 0.3s linear;
+  --left-on-toggle: calc(100% - var(--width-circle));
+}
+
+.inlineBlock { display: inline-block; }
+
+.toggleContainer {
+  font-family: var(--font-family-primary);
+  display: grid;
+  grid-template-areas: 
+    "      .       labelTop        .       "
+    "  labelLeft    toggle     labelRight  "
+    "      .      labelBottom      .       ";
+  grid-template-columns: repeat(3, max-content);
+  grid-template-rows: repeat(3, max-content);
+  color: var(--color-bg);
+  overflow: hidden;
+  label {
+    grid-area: labelRight;
+    place-self: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1rem;
+    &.top {
+      grid-area: labelTop;
+      margin: var(--margin-input) var(--margin-input) 0 var(--margin-input);
+    }
+    &.right {
+      grid-area: labelRight;
+      margin: var(--margin-input) var(--margin-input) var(--margin-input) 0;
+    }
+    &.left {
+      grid-area: labelLeft;
+      margin: var(--margin-input) 0 var(--margin-input) var(--margin-input);
+    }
+    &.bottom {
+      grid-area: labelBottom;
+      margin: 0 var(--margin-input) var(--margin-input) var(--margin-input);
+    }
+    &.on {
+      color: var(--color-active);
+    }
+  }
+  button {
+    grid-area: toggle;
+    place-self: center;
+    position: relative;
+    border-radius: calc(var(--width-ellipse) / 2);
+    width: var(--width-ellipse);
+    height: var(--width-circle);
+    margin: var(--margin-input);
+    border: none;
+    background-color: var(--color-bg-hover);
+    transition: var(--transition-bg-flat-toggle);
+    cursor: pointer;
+    &:not(:disabled):hover,
+    &:not(:disabled):focus-visible {
+      &.off::before { background-color: var(--color-hover); }
+    }
+    &:disabled {
+      cursor: not-allowed;
+      background-color: var(--color-bg-disabled);
+      & + label { cursor: not-allowed; }
+    }
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: var(--width-circle);
+      width: var(--width-circle);
+      border-radius: 50%;
+      background-color: var(--color);
+      transition: var(--transition-slider-flat-toggle),
+                  var(--transition-bg-flat-toggle);
+    }
+    &:disabled::before {
+      cursor: not-allowed;
+      background-color: var(--color-bg-disabled);
+    }
+    &.off::before { left: 0; }
+    &.on::before {
+      left: var(--left-on-toggle);
+      background-color: var(--color-bg);
+    }
+  }
+}
