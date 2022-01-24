@@ -1,29 +1,66 @@
-import React from "react"
+import React, { useState } from "react"
 import { BackgroundMessageTypes } from '../background'
 import { safeJSONParse } from '../utils/parsing'
+import EventDisplay from "../shared/components/EventDisplay"
+import './styles.scss'
+
+export enum DevtoolsMessageTypes {
+  LOG_AMPLITUDE_EVENT = 'LOG_AMPLITUDE_EVENT'
+}
 
 export const Devtools = () => {
   chrome.devtools.network.onRequestFinished.addListener( request => {
-    request.getContent((content) => {
-      // TODO -- maybe make this a port, lots of requests rapid-fire sometimes...
-      chrome.runtime.sendMessage({ type: BackgroundMessageTypes.REQUEST_CONTENT, payload: { request, content: safeJSONParse(content).value }})
 
-      // This logs to the main devtools console but the use of `eval()` is not great
-      // chrome.devtools.inspectedWindow.eval(`
-      //   console.log('content', ${content})
-      // `)
+    request.getContent( content => {
+      if (!chrome.runtime) return console.error('Request attempted but chrome runtime is undefined', { request, content })
+
+      // TODO -- maybe make this a port, lots of requests rapid-fire sometimes...
+      chrome.runtime.sendMessage({
+        type: BackgroundMessageTypes.REQUEST_CONTENT,
+        payload: {
+          request,
+          content: safeJSONParse(content).value
+        }
+      })
     })
   })
 
+  // const extensionId = window.localStorage.getItem('devCareExtensionId') // TODO not working -- trying to set this inside the injected script...
+  // console.log(extensionId) // TODO not working
+
+  // chrome.runtime.connect() // TODO not working -- need extension id to be able to use a port here
+
+  const [ loggingEvents, setLoggingEvents ] = useState([])
+
+  chrome.runtime.onMessage.addListener( ({ type, payload }: { type: DevtoolsMessageTypes, payload: any}, sender, sendResponse) => {
+    if (type === DevtoolsMessageTypes.LOG_AMPLITUDE_EVENT) console.log(type, payload)
+    if (!Object.values(DevtoolsMessageTypes).includes(type)) return
+
+    switch (type) {
+      case DevtoolsMessageTypes.LOG_AMPLITUDE_EVENT:
+        setLoggingEvents([...loggingEvents, ...payload])
+        break
+      default:
+        console.error('Devtools receieved invalid message:', { type, payload, sender })
+        break
+    }
+  })
+
+  const sampleEvent = {
+    event_type: 'blah',
+    event_properties: {
+      screen_name: 'some page',
+      web_platform: 'web',
+      wps_group: 'my group'
+    }
+  }
+
   return (
-    <>
-      <header>
-        <h1>&lt;DevCare/&gt;</h1>
-      </header>
+    <div id='devtools'>
       <main>
-        <p>Hello World!</p>
+        <EventDisplay loggingEvents={ loggingEvents } />
       </main>
-    </>
+    </div>
   )
 }
 

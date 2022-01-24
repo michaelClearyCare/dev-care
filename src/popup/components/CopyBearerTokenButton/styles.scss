@@ -1,24 +1,5 @@
-.copyBearerTokenButton {
-  width: 150px;
-  background-color: var(--color-primary);
-  color: var(--color-white);
-  padding: 4px;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s,
-              color 0.3s;
-  &:hover {
-    background-color: var(--color-primary-accent);
-    color: var(--color-whiter);
-  }
-  &:disabled {
-    background-color: var(--color-disbled);
-    color: var(--color-background);
-    &:hover {
-      cursor: not-allowed;
-      color: var(--color-background);
-    }
-  }
+.hidden {
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
 }

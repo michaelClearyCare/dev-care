@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Yantramanav:wght@400;700&display=swap');
+
+:root {
+  --font-family-primary: 'Yantramanav', sans-serif;
+
+  --color-bg: #d3d3d3;
+  --color: #333333;
+
+  --color-bg-hover: #777777;
+  --color-hover: #cccccc;
+
+  --color-bg-active: #555555;
+  --color-active: #ffffff;
+  
+  --color-bg-disabled: #000000;
+  --color-disabled: #4a4a4a;
+
+  --margin-input: 0.25rem;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: #000000;
+}

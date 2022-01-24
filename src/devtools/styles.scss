@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Tangerine&display=swap');
+
+:root {
+  --font-family-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --columns-main: 1fr;
+  --color-background-events: #eeeeee;
+  --color-background-header: #111111;
+  --color-white: #ffffff;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#devtools {
+  height: 100vh;
+  background-color: #000;
+  color: var(--color-white);
+  main {
+    display: grid;
+    grid-template-columns: var(--columns-main);
+    height: 100%;
+    font-family: var(--font-family-main);
+  }
+}

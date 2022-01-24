@@ -2,9 +2,9 @@
   "manifest_version": 2,
   "name": "Dev Care",
   "description": "Developer tools to make you smile",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "browser_action": {
-    "default_icon": "careLogo.png",
+    "default_icon": "careLogoLight.png",
     "default_popup": "popup.html"
   },
   "content_scripts": [
@@ -26,11 +26,12 @@
   },
   "devtools_page": "devtools.html",
   "icons": {
-    "16": "careLogo.png",
-    "48": "careLogo.png",
-    "128": "careLogo.png"
+    "16": "careLogoDark.png",
+    "48": "careLogoDark.png",
+    "128": "careLogoDark.png"
   },
   "permissions": [
+    "tabs",
     "webRequest",
     "<all_urls>"
   ],

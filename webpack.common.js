@@ -1,6 +1,7 @@
 const path = require('path')
 
 module.exports = {
+  // Add new entry points for any "top-level" ts/tsx files, e.g. devtools must be listed here but EventDisplay, which is consumed by devtools, does not.
   entry: {
     popup: path.join(__dirname, 'src/popup/index.tsx'),
     devtools: path.join(__dirname, 'src/devtools/index.tsx'),
