@@ -1,5 +1,6 @@
 import { ephemeralScript } from './utils/scriptInjection'
 import { DevtoolsMessageTypes } from './devtools/Devtools'
+import { BackgroundMessageTypes } from './background'
 
 let storedBearerToken: string
 
@@ -15,6 +16,7 @@ export enum ContentMessageTypes {
   GET_BEARER_TOKEN = 'GET_BEARER_TOKEN', // Get stored bearer token
   COPY_BEARER_TOKEN = 'COPY_BEARER_TOKEN', // Copy bearer token to clipboard
   AMPLITUDE_LOGGING = 'AMPLITUDE_LOGGING', // Send intercepted amplitude logging event request data
+  GET_GQL_JWT_TOKEN = 'GET_GQL_JWT_TOKEN'
 }
 
 // TODO this does not work
@@ -34,6 +36,7 @@ chrome.runtime.onMessage.addListener(({ type, payload }: ContentMessage, sender,
 
   switch(type) {
     case ContentMessageTypes.STORE_BEARER_TOKEN:
+      console.log(`Storing bearer token ${payload?.bearerToken}`);
       storedBearerToken = payload?.bearerToken || storedBearerToken
       break
     case ContentMessageTypes.GET_BEARER_TOKEN:
@@ -45,6 +48,9 @@ chrome.runtime.onMessage.addListener(({ type, payload }: ContentMessage, sender,
     case ContentMessageTypes.AMPLITUDE_LOGGING:
       // Send logging data to devtools to display in DevCare tab
       chrome.runtime.sendMessage({ type: DevtoolsMessageTypes.LOG_AMPLITUDE_EVENT, payload })
+      break
+    case ContentMessageTypes.GET_GQL_JWT_TOKEN:
+      chrome.runtime.sendMessage({ type: BackgroundMessageTypes.REQUEST_GQL_JWT_TOKEN, payload }, sendResponse)
       break
     default:
       console.error(`contentScript received invalid message`, { type, payload, sender })

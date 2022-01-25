@@ -3,7 +3,8 @@ import { handleNetRequests } from './messageHandlers/netRequests'
 
 export enum BackgroundMessageTypes {
   REQUEST_CONTENT = 'REQUEST_CONTENT', // Send content from a web request
-  INJECTION_TEST = 'INJECTION_TEST'
+  INJECTION_TEST = 'INJECTION_TEST',
+  REQUEST_GQL_JWT_TOKEN = 'REQUEST_GQL_JWT_TOKEN'
 }
 
 chrome.runtime.onMessage.addListener(({ type, payload }, sender, sendResponse) => {
@@ -20,6 +21,9 @@ chrome.runtime.onMessage.addListener(({ type, payload }, sender, sendResponse) =
       console.log(payload)
       break
 
+    case BackgroundMessageTypes.REQUEST_GQL_JWT_TOKEN:
+      fetchGraphqlJwtBearerToken(payload)
+      break
     default: console.error('Invalid message type', { type, payload, sender })
   }
 
@@ -35,6 +39,18 @@ const interceptBearerToken = (req: chrome.webRequest.WebRequestHeadersDetails) =
       sendContentMessage({ type: ContentMessageTypes.STORE_BEARER_TOKEN, payload: { bearerToken }})
     }
   }
+}
+
+const fetchGraphqlJwtBearerToken = (bearerToken: string) => {
+  // const jwtRequest = `curl --insecure -v -H 'Host: oathkeeper-httpbin.useast1.dev.omni.carezen.net' https://useast1-istioingressgw-int.dev.omni.carezen.net/headers -H 'Authorization: ${bearerToken}'`
+  fetch("https://useast1-istioingressgw-int.dev.omni.carezen.net/", {
+    headers: {
+      Authorization: bearerToken,
+      Host: "oathkeeper-httpbin.useast1.dev.omni.carezen.net"
+    }
+  }).then(res => {
+      console.log(res);
+    });
 }
 
 if (chrome.webRequest) {
