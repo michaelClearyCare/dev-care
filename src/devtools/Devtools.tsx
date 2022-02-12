@@ -8,19 +8,22 @@ export enum DevtoolsMessageTypes {
   LOG_AMPLITUDE_EVENT = 'LOG_AMPLITUDE_EVENT'
 }
 
+export type DevtoolsPayload = {
+  request: any; // TODO add strict typing
+  content: any;
+}
+
 export const Devtools = () => {
   chrome.devtools.network.onRequestFinished.addListener( request => {
 
-    request.getContent( content => {
-      if (!chrome.runtime) return console.error('Request attempted but chrome runtime is undefined', { request, content })
+    request.getContent( data => {
+      if (!chrome.runtime) return console.error('Request attempted but chrome runtime is undefined', { request, data })
 
+      const content = safeJSONParse(data).value
       // TODO -- maybe make this a port, lots of requests rapid-fire sometimes...
       chrome.runtime.sendMessage({
         type: BackgroundMessageTypes.REQUEST_CONTENT,
-        payload: {
-          request,
-          content: safeJSONParse(content).value
-        }
+        payload: { request, content }
       })
     })
   })

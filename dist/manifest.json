@@ -33,6 +33,7 @@
   "permissions": [
     "tabs",
     "webRequest",
+    "http://127.0.0.1/*",
     "<all_urls>"
   ],
   "content_security_policy": "script-src 'self'; script-src-elem 'self' 'nonce-devtools'; object-src 'self'"

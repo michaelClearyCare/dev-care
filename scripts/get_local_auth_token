@@ -1,0 +1,8 @@
+#!/bin/sh
+
+host="Host: envoy-httpbin.useast1.dev.omni.carezen.net"
+url="https://useast1-istioingressgw-int.dev.omni.carezen.net/headers"
+auth="$1"
+
+if [[ $string != "Bearer "* ]]; then echo -e "Invalid Bearer Token: \"$auth\"\nMust be of format: \"Bearer xxxxxxxx\""
+else curl --insecure -v -H "$host" $url -H "authorization: $auth"; fi

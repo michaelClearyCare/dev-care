@@ -1,19 +1,35 @@
 import { ContentMessageTypes, sendContentMessage } from './contentScript'
 import { handleNetRequests } from './messageHandlers/netRequests'
+import { GoRequestPayload, handleGoServerRequest } from './serverActions'
+import { DevtoolsPayload } from './devtools/Devtools'
+
+export type BackgroundMessagePayload = GoRequestPayload | DevtoolsPayload
+export interface BackgroundMessage { type: BackgroundMessageTypes, payload: BackgroundMessagePayload }
 
 export enum BackgroundMessageTypes {
   REQUEST_CONTENT = 'REQUEST_CONTENT', // Send content from a web request
-  INJECTION_TEST = 'INJECTION_TEST'
+  INJECTION_TEST = 'INJECTION_TEST',
+  GO_REQUEST = 'GO_REQUEST'
 }
 
-chrome.runtime.onMessage.addListener(({ type, payload }, sender, sendResponse) => {
+// TODO test this to replace if checks in the switch statement that are needed to prevent type errors because typescript cannot determine payload type at compile time
+const validatePayload = (payload: BackgroundMessagePayload, expectedType: BackgroundMessagePayload) => {
+  return Object.keys(payload).every((key) => key in expectedType)
+}
+
+chrome.runtime.onMessage.addListener(({ type, payload }: BackgroundMessage, sender, sendResponse) => {
   if (!Object.values(BackgroundMessageTypes).includes(type)) return
 
-  switch(type) {
+  switch (type) {
+    case BackgroundMessageTypes.GO_REQUEST:
+      // payload should look like this: { action: GoRequestActions, data }
+      //   ex:   { action: GoRequestActions.GET_LOCAL_AUTH_TOKEN, data: 'Bearer xxxxxxxxxxx' }
+      if (('action' in payload)) handleGoServerRequest(payload)
+      break
+
     case BackgroundMessageTypes.REQUEST_CONTENT:
       // TODO -- probably should move this case to a port and open comms between devtools and content scripts. Background can act as gatekeeper and router.
-      const { request, content } = payload
-      handleNetRequests({ request, content })
+      if (('request' in payload)) handleNetRequests(payload)
       break
 
     case BackgroundMessageTypes.INJECTION_TEST: 
