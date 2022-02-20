@@ -1,5 +1,34 @@
 import { ephemeralScript } from './utils/scriptInjection'
 import { DevtoolsMessageTypes } from './devtools/Devtools'
+import {getCLS, getFID, getLCP} from 'web-vitals';
+
+// Need to preserve logs to view some of this data, JSON strigify works too but hard to visually parse
+getCLS(({ delta, entries, id, name, value }) => {
+  console.log('CLS:', { delta, entries, id, name, value })
+
+  const layoutShiftEntries = entries.filter( ({ entryType }) => entryType === 'layout-shift')
+
+  console.log('hello')
+  console.log(JSON.stringify(layoutShiftEntries))
+  layoutShiftEntries.forEach((entry) => {
+    const el = document.createElement('p')
+    el.innerHTML = `${entry.duration} ${entry.entryType} ${entry.name}`
+    document.body.appendChild(el)
+  })
+
+  // const layoutShifts = layoutShiftEntries.map((entry) => ({
+  //   elements: entry.sources.map(({ currentRect, node, previouseRect }) => ({
+  //     node,
+  //     delta,
+  //     duration: sources.duration
+  //   }))
+  // }))
+
+  // console.log('LAYOUT SHIFTS:', layoutShifts, true)
+
+  getFID(data => console.log('FID:', data))
+  getLCP(data => console.log('LCP:', data))
+})
 
 let storedBearerToken: string
 
