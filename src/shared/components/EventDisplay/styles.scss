@@ -1,17 +1,21 @@
 .eventDisplay {
   display: grid;
+  grid-template-rows: auto 1fr;
   background-color: #222222;
   padding: 0.5rem;
   height: clamp(1rem, max-content, 100%);
-  max-height: 100%;
   overflow-y: auto;
   h2 {
     display: grid;
-    place-content: center;
+    justify-content: center;
     height: 2rem;
     font-size: 1.5rem;
   }
   ul {
+    display: grid;
+    align-items: start;
+    align-content: start;
+    height: 100%;
     &::-webkit-scrollbar {
       width: 5px;
       background-color: #111111;
