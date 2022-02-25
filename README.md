@@ -8,7 +8,7 @@
 
 ## Install
 
-1. Go to [*chrome://extensions*](chrome://extensions) in Google Chrome
+1. Go to [*chrome://extensions*](chrome://extensions) in a Chrome browser
 2. Turn on **Developer mode** with the toggle in the top-right of the page
 3. Click **Load unpacked extension...** and select the *dist* folder from this repo
 4. Click on **Details** for this extension and toggle on **Allow in Incognito**
@@ -22,7 +22,7 @@
 
 **Start Server**
 
-`yarn dev` &nbsp; to compile once
+`yarn dev` &nbsp; to compile
 
 &nbsp; &nbsp; &nbsp;\- *or* -
 
@@ -45,6 +45,19 @@ Run this from the top-level in a separate terminal while running the app
 Click the Care icon in your extensions bar to open the popup window. This is where you can interact with the core functionality of the extension. New features will be added here periodically.
 
 Some features may work behind the scenes and do not require a UI. These features will usually have configurable options and an options page may be added eventually.
+
+---
+
+## Contribution Guide
+Please keep files small and reuse code as much as possible.
+
+Try to avoid 3rd party libraries, keep dependancies low, and please, no semi-colons 😉
+
+New features should have an associated Jira ticket in this epic: [**ENT-1736**](https://carecom.atlassian.net/browse/ENT-1736)
+
+Anyone can create or pick up any open ticket.
+
+PRs should be reviewed and approved, though there is no formal process yet.
 
 ---
 ## Issues, Comments, Questions, Requests?
