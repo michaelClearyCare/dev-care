@@ -80,3 +80,4 @@ Please reach out to [michael.cleary@care.com](mailto:michael.cleary@care.com?sub
 > * Create collapsable wrapper component for devtools and popup
 > * Refactor **all** color variable names, combine appropriately in higher level shared folders
 > * Build out request interceptor. Amplitude and graphql requests can be filtered (already implemented). Need to display events and create toggle in popup to control this functionality
+> * Create method to log all `console.log`s to the main console. That would be dope! ( should have a way to show what context the log is from, maybe cool styling 😈 )
