@@ -59,6 +59,12 @@ Anyone can create or pick up any open ticket.
 
 PRs should be reviewed and approved, though there is no formal process yet.
 
+**Final Note:**
+
+> Don't worry about whether a thing you try to do is possible or not here.
+If it doesn't work out, just add some quick documentation to the story and close it out. 
+If nothing else, at least you learned what is not possible here, and probably pick up some other knowledge along the way! Good job!
+
 ---
 ## Issues, Comments, Questions, Requests?
 Please reach out to [michael.cleary@care.com](mailto:michael.cleary@care.com?subject=CareDev%20Chrome%20Extension%20Feedback&body=Thank%20you%20for%20reaching%20out%20regarding%20the%20DevCare%20Chrome%20Extension.%0D%0A%0D%0A%0D%0APlease%20leave%20any%20feedback%20here.%0D%0A%20%20%0D%0A%0D%0A%0D%0AFor%20bug%20reporting,%20please%20provide%20the%20following:%0D%0A%0D%0A%20%20*%20%20Description%20of%20issue:%0D%0A%20%20%20%20%20%0D%0A%0D%0A%0D%0A%20%20*%20%20Screenshots%20(if%20applicable):%0D%0A%20%20%20%20%20%0D%0A%0D%0A%0D%0A%20%20*%20%20Steps%20to%20reproduce:%0D%0A%20%20%20%20%20%0D%0A%0D%0A%0D%0A)
