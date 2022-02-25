@@ -36,10 +36,6 @@ Run this from the top-level in a separate terminal while running the app
 
 `yarn react-devtools`
 
-**Build for Production**
-
-`yarn build` &nbsp; to build a minified version
-
 ---
 ## Have Fun!
 Click the Care icon in your extensions bar to open the popup window. This is where you can interact with the core functionality of the extension. New features will be added here periodically.
