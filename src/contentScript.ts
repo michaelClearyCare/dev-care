@@ -13,7 +13,6 @@ export interface ContentMessage {
 export enum ContentMessageTypes {
   STORE_BEARER_TOKEN = 'STORE_BEARER_TOKEN', // Store bearer token for use later
   GET_BEARER_TOKEN = 'GET_BEARER_TOKEN', // Get stored bearer token
-  COPY_BEARER_TOKEN = 'COPY_BEARER_TOKEN', // Copy bearer token to clipboard
   AMPLITUDE_LOGGING = 'AMPLITUDE_LOGGING', // Send intercepted amplitude logging event request data
 }
 
@@ -37,9 +36,6 @@ chrome.runtime.onMessage.addListener(({ type, payload }: ContentMessage, sender,
       storedBearerToken = payload?.bearerToken || storedBearerToken
       break
     case ContentMessageTypes.GET_BEARER_TOKEN:
-      sendResponse(storedBearerToken)
-      break
-    case ContentMessageTypes.COPY_BEARER_TOKEN:
       sendResponse(storedBearerToken)
       break
     case ContentMessageTypes.AMPLITUDE_LOGGING:
